@@ -3,16 +3,27 @@ package com.williams.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.williams.model.ZipRange;
-import com.williams.service.ZipRangeSortor;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * <p>
+ * This test class is dedicated to test the methods of ZipRangeSortor.
+ * </p>
+ * @author Rya Yang
+ * @version 1.0
+ * @since 05/09/2019
+ *
+ */
 public class TestZipRangeSortor {
 
   @Test
+  /**
+   * Test the overridden compare method.
+   */
   public void compareTest() {
   
-    ZipRangeSortor sortor = new ZipRangeSortor();
+    ZipRangeSorter sortor = new ZipRangeSorter();
     
     ZipRange range1 = new ZipRange(0, 5);
     
@@ -32,7 +43,7 @@ public class TestZipRangeSortor {
     assertEquals(-1, sortor.compare(range1, range6));
     
     ZipRange range7 = new ZipRange(0, 5);
-    assertEquals(-1, sortor.compare(range1, range7));
+    assertEquals(0, sortor.compare(range1, range7));
     
     ZipRange range8 = new ZipRange(4, 5);
     assertEquals(-1, sortor.compare(range1, range8));

@@ -9,9 +9,21 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * <p>
+ * Test class dedicated to test the methods of ZiRangeMerger.
+ * </p>
+ * @author Ryan Yang
+ * @version 1.0
+ * @since 05/09/2019
+ *
+ */
 public class TestZipRangeMerger {
 
   @Test
+  /**
+   * Test the merge result of ordered list of ZipRange objects.
+   */
   public void mergeTest() {
         
     List<ZipRange> ranges = new ArrayList<>();
@@ -32,8 +44,10 @@ public class TestZipRangeMerger {
     ranges.add(range7);
     
     ZipRangeMerger merger = new ZipRangeMerger();
-    assertEquals(2, merger.merge(ranges).size());
+    List<ZipRange> mergedList = merger.merge(ranges);
 
+    assertEquals(1, mergedList.size());
+    assertEquals(mergedList.get(0), new ZipRange(0, 10));
   }
 
 }

@@ -44,7 +44,7 @@ public class ZipRange {
    * @throws InvalidZipRangeException
    * 
   */
-  public void validate() {
+  public void validate() throws InvalidZipRangeException {
     if (start > end) {
       throw new InvalidZipRangeException("Invalide initial boundaries");
     }
@@ -55,5 +55,31 @@ public class ZipRange {
   public String toString() {
     return "[" + start + ", " + end + "]";
   }
+
+  @Override
+  public int hashCode() {
+    // TODO Auto-generated method stub
+    int prime = 379;
+    
+    return start + prime * end;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    // TODO Auto-generated method stub
+    if (!(obj instanceof ZipRange)) {
+      return false;
+    }
+
+    ZipRange zips = (ZipRange)obj;
+
+    if (zips.getStart() == this.start && zips.getEnd() == this.end) {
+      return true;
+    }
+
+    return false;
+  }
+  
+  
 
 }

@@ -1,10 +1,14 @@
 package com.williams.entry;
 
+import com.williams.exception.InvalidInputFormatException;
+import com.williams.exception.InvalidZipRangeException;
 import com.williams.model.ZipRange;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -14,7 +18,9 @@ import java.util.Scanner;
  * @since 1.0
  * @since 05/09/2019
  */
-public class Messager {
+public class Messenger {
+
+  private static final Logger logger = Logger.getLogger(Messenger.class);
 
   /**
    * <p>
@@ -32,13 +38,13 @@ public class Messager {
     while (!valid) {
       ranges = new ArrayList<>();
       
-      System.out.println("Please type a group of zip code pairs "
+      logger.info("Please type a group of zip code pairs "
           + "in this format: ([ , ], [ , ], ..., [ , ])");
       
       String inStr = scanner.nextLine().trim();
       try {
         if (!inStr.startsWith("(") || !inStr.endsWith(")")) {
-          throw new Exception("Input should start with '(', "
+          throw new InvalidInputFormatException("Input should start with '(', "
             + "and end with ')'! Please try again.");
         } else {
           inStr = inStr.substring(1, inStr.length() - 1);
@@ -57,7 +63,7 @@ public class Messager {
                   String[] codePair = subStr.split(",");
                   
                   if (codePair.length != 2) {
-                    throw new Exception("One pair of brackets have two and "
+                    throw new InvalidInputFormatException("One pair of brackets have two and "
                       + "only two integers separated by comma. Please try again.");
                   }
                   try {
@@ -67,40 +73,59 @@ public class Messager {
                     ZipRange range = new ZipRange(code1, code2);
                     ranges.add(range);
                   } catch (Exception e) {
-                    throw new Exception("String cannot be converted into int. Please try again.");
+                    throw new InvalidInputFormatException("String cannot be converted "
+                      + "into int. Please try again.");
                   }
                   
                   indexLeft = indexRight;
                   break;
                 } else if (inStr.charAt(indexRight) == '[') {
-                  throw new Exception("Unpaired brackets. Please try again");
+                  throw new InvalidInputFormatException("Unpaired brackets. Please try again");
                 }
               }
               
               if (inStr.charAt(indexLeft) == '[' && indexRight >= inStr.length()) {
-                throw new Exception("Unpaired brackets. Please try again");
+                throw new InvalidInputFormatException("Unpaired brackets. Please try again");
               }
             } else if (inStr.charAt(indexLeft) == ']') {
-              throw new Exception("Unpaired brackets. Please try again");
+              throw new InvalidInputFormatException("Unpaired brackets. Please try again");
             }
           }
           
           //validate every pair of zip codes.
-          ranges.forEach(e -> {
+          for (ZipRange e : ranges) {
             e.validate();
-          });
-       
+          }
+
           valid = true;    
         }
-      } catch (Exception e) {
-        System.out.println(e.getMessage());
-        valid = false;
+      } catch (InvalidInputFormatException e) {
+        logger.info(e.getMessage());
+      } catch (InvalidZipRangeException e) {
+        logger.info(e.getMessage());
       }
 
     }
       
     scanner.close();
     return ranges;
+  }
+  
+  /**
+   * <p>
+   * Write result to console.
+   * </p>
+   * @param ranges list of ZipRange objects
+   */
+  public void write(List<ZipRange> ranges) {
+    StringBuffer sb = new StringBuffer();
+
+    ranges.forEach(e -> {
+      sb.append(e.toString()).append(", ");
+    });
+
+    String s = sb.toString();
+    logger.info(s.substring(0, s.length() - 2));
   }
   
 }

@@ -1,17 +1,18 @@
 package com.williams.exception;
 
-
 /**
- * Expcetion thrown when validating ZipRange object fails.
+ * <p>
+ * Exception thrown when input format is wrong.
+ * </p>
  * @author Ryan Yang
  * @version 1.0
  * @since 05/09/2019
  */
-public class InvalidZipRangeException extends Exception {
+public class InvalidInputFormatException extends Exception {
 
   private static final long serialVersionUID = 1L;
 
-  public InvalidZipRangeException(String message) {
+  public InvalidInputFormatException(String message) {
     super(message);
   }
 
