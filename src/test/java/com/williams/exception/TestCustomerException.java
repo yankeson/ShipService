@@ -9,6 +9,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * <p>
+ * Test class used to test customer exception.
+ * </p>
+ * @author Ryan Yang
+ * @version 1.0
+ * @since 05/09/2019
+ *
+ */
 public class TestCustomerException {
 
   @Test
@@ -21,9 +30,10 @@ public class TestCustomerException {
     ranges.add(new ZipRange(5, 6));
 
     assertThrows(InvalidZipRangeException.class, () -> { 
-      ranges.forEach(e -> {
+      for (ZipRange e : ranges) {
         e.validate();
-      }); });
+      }
+    });
 
   }
 

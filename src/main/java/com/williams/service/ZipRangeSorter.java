@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @version 1.0
  * @since 05/09/2019
  */
-public class ZipRangeSortor implements Comparator<ZipRange> {
+public class ZipRangeSorter implements Comparator<ZipRange> {
 
   @Override
   /**
@@ -20,12 +20,15 @@ public class ZipRangeSortor implements Comparator<ZipRange> {
    * The two parameters should be valid ZipRange objects.
    */
   public int compare(ZipRange o1, ZipRange o2) {
+
+    if (o1.equals(o2)) {
+      return 0;
+    }
+
     if (o1.getStart() < o2.getStart()) {
       return -1;
-    } else if (o1.getStart() == o2.getStart()) {
-      if (o1.getEnd() <= o2.getEnd()) {
-        return -1;
-      }
+    } else if (o1.getStart() == o2.getStart() && o1.getEnd() < o2.getEnd()) {
+      return -1;
     }
     
     return 1;
