@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  * @since 05/09/2019
  *
  */
-public class TestZipRangeSortor {
+public class TestZipRangeSorter {
 
   @Test
   /**

@@ -20,6 +20,11 @@ import org.junit.jupiter.api.Test;
  */
 public class TestCustomerException {
 
+  /**
+   * <p>
+   * (3, 1) is an invalid object. It's validate method is expected throw InvalideZipRangeException.
+   * </p>
+   */
   @Test
   public void whenInvalidZipRangeException_thenAssertSucceed() {
 

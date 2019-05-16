@@ -12,6 +12,12 @@ public class InvalidInputFormatException extends Exception {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * <p>
+   * Constructor to instantiate a customer Exception with proper message.
+   * </p>
+   * @param message a string of error message.
+   */
   public InvalidInputFormatException(String message) {
     super(message);
   }

@@ -1,5 +1,6 @@
 package com.williams.entry;
 
+import com.williams.constants.ErrorMessage;
 import com.williams.exception.InvalidInputFormatException;
 import com.williams.exception.InvalidZipRangeException;
 import com.williams.model.ZipRange;
@@ -44,8 +45,7 @@ public class Messenger {
       String inStr = scanner.nextLine().trim();
       try {
         if (!inStr.startsWith("(") || !inStr.endsWith(")")) {
-          throw new InvalidInputFormatException("Input should start with '(', "
-            + "and end with ')'! Please try again.");
+          throw new InvalidInputFormatException(ErrorMessage.INVALID_PARENTHESIS);
         } else {
           inStr = inStr.substring(1, inStr.length() - 1);
               
@@ -63,32 +63,31 @@ public class Messenger {
                   String[] codePair = subStr.split(",");
                   
                   if (codePair.length != 2) {
-                    throw new InvalidInputFormatException("One pair of brackets have two and "
-                      + "only two integers separated by comma. Please try again.");
+                    throw new InvalidInputFormatException(ErrorMessage.UNPAIRED_INTEGERS);
                   }
+
                   try {
                     int code1 = Integer.parseInt(codePair[0].trim());
                     int code2 = Integer.parseInt(codePair[1].trim());
                     
                     ZipRange range = new ZipRange(code1, code2);
                     ranges.add(range);
-                  } catch (Exception e) {
-                    throw new InvalidInputFormatException("String cannot be converted "
-                      + "into int. Please try again.");
+                  } catch (NumberFormatException e) {
+                    throw new InvalidInputFormatException(ErrorMessage.INVALID_INTEGER);
                   }
                   
                   indexLeft = indexRight;
                   break;
                 } else if (inStr.charAt(indexRight) == '[') {
-                  throw new InvalidInputFormatException("Unpaired brackets. Please try again");
+                  throw new InvalidInputFormatException(ErrorMessage.UNPAIRED_BRACKETS);
                 }
               }
               
               if (inStr.charAt(indexLeft) == '[' && indexRight >= inStr.length()) {
-                throw new InvalidInputFormatException("Unpaired brackets. Please try again");
+                throw new InvalidInputFormatException(ErrorMessage.UNPAIRED_BRACKETS);
               }
             } else if (inStr.charAt(indexLeft) == ']') {
-              throw new InvalidInputFormatException("Unpaired brackets. Please try again");
+              throw new InvalidInputFormatException(ErrorMessage.UNPAIRED_BRACKETS);
             }
           }
           
@@ -100,9 +99,9 @@ public class Messenger {
           valid = true;    
         }
       } catch (InvalidInputFormatException e) {
-        logger.info(e.getMessage());
+        logger.error(e.fillInStackTrace());
       } catch (InvalidZipRangeException e) {
-        logger.info(e.getMessage());
+        logger.error(e.fillInStackTrace());
       }
 
     }
