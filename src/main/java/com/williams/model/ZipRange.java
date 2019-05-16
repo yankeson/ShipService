@@ -56,17 +56,33 @@ public class ZipRange {
     return "[" + start + ", " + end + "]";
   }
 
+  /**
+   * Override hashCode method to maintain the contract between equals and hashCode.
+   */
   @Override
   public int hashCode() {
-    // TODO Auto-generated method stub
-    int prime = 379;
+
+    int hash = 7;
+
+    hash = hash * 379 + this.start;
+    hash = hash * 379 + this.end;
     
-    return start + prime * end;
+    return hash;
   }
 
+  /**
+   * <p>
+   * When and only when the objects have the equal values for the ordered 
+   * integer pairs, then they are equal.
+   * </p>
+   */
   @Override
   public boolean equals(Object obj) {
-    // TODO Auto-generated method stub
+
+    if (obj == null) {
+      return false;
+    }
+
     if (!(obj instanceof ZipRange)) {
       return false;
     }

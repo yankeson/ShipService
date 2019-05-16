@@ -25,9 +25,8 @@ public class ZipRangeSorter implements Comparator<ZipRange> {
       return 0;
     }
 
-    if (o1.getStart() < o2.getStart()) {
-      return -1;
-    } else if (o1.getStart() == o2.getStart() && o1.getEnd() < o2.getEnd()) {
+    if (o1.getStart() < o2.getStart()
+        || (o1.getStart() == o2.getStart() && o1.getEnd() < o2.getEnd())) {
       return -1;
     }
     
